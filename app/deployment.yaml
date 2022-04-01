@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  selector:
+    matchLabels:
+      app: app
+      tier: app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: app
+        tier: app
+    spec:
+      containers:
+      - name: php-redis
+        image: nginx:1.20.2
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        ports:
+        - containerPort: 80
